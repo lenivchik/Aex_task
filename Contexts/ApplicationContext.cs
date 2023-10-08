@@ -6,19 +6,15 @@ namespace ConsoleApp1.Contexts
 {
     public class ApplicationContext : DbContext
     {
-        private string connectionString;
+        public  DbSet<Customer> Customers { get; set; }
+        public  DbSet<Manager> Managers { get; set; }
+        public   DbSet<Order> Orders { get; set; }
 
-
-        public ApplicationContext(string connectionString) => this.connectionString = connectionString;
-
-
-        public DbSet<Customer> Customers { get; set; } = null!;
-        public DbSet<Manager> Managers { get; set; } = null!;
-        public DbSet<Order> Orders { get; set; } = null!;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(connectionString);
         }
+
     }
+
+
 }
