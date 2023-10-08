@@ -1,7 +1,7 @@
 # Aex_task
 Запрос и метод для получения данных
 <Br>Запрос (вывод имен Customer и их Manager, которые сделали покупок на общую сумму больше 1000 с 01.01.2023):
-<p><code>       SELECT c.NAME AS Customer, m.NAME AS Manager, SUM(o.AMOUNT) as Amount
+<p><code>       SELECT c.NAME AS Customer, m.NAME AS Manager
         FROM CUSTOMERS c
         INNER JOIN MANAGERS m ON c.MANAGERID = m.ID
         INNER JOIN ORDERS o ON c.ID = o.CUSTOMERID
