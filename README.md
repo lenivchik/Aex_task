@@ -1,15 +1,16 @@
 # Aex_task
 Запрос и метод для получения данных
-<Br>Запрос:
-<p><code>SELECT c.NAME AS Customer, m.NAME AS Manager, SUM(o.AMOUNT) AS Amount
-        FROM CUSTOMERS c INNER JOIN MANAGERS m ON c.MANAGERID = m.ID
+<Br>Запрос (вывод имен Customer и их Manager, которые сделали покупок на общую сумму больше 1000 с 01.01.2023):
+<p><code>       SELECT c.NAME AS Customer, m.NAME AS Manager, SUM(o.AMOUNT) as Amount
+        FROM CUSTOMERS c
+        INNER JOIN MANAGERS m ON c.MANAGERID = m.ID
         INNER JOIN ORDERS o ON c.ID = o.CUSTOMERID
-        WHERE o.DATE >= @beginDate AND o.DATE <= @currentDate
+        WHERE o.DATE >= '2023-01-01'
         GROUP BY c.ID, c.NAME, m.NAME
-        HAVING SUM(o.AMOUNT) > @sumAmount;
+        HAVING SUM(o.AMOUNT) > 1000;
 </code></p>
 
-<Br/> Метод GetCustomers (Service\CustomersService.cs)
+<Br/> Метод GetCustomers (Service\CustomersService.cs) (возвращает List<CustomerViewModel>, где покупок на общую сумму больше sumAmount в промежуток с beginDate до текущего времени.) 
 
 <p><code>public  List<CustomerViewModel> GetCustomers(DateTime beginDate, decimal sumAmount)
         {
