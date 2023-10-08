@@ -15,14 +15,13 @@ namespace ConsoleApp1.Service
     public class CustomerService
     {
         private ApplicationContext context;
-        private string connectionString;
 
         public CustomerService(ApplicationContext context)
         {
             this.context = context;
         }
 
-        public  List<CustomerViewModel> GetCustomers(DateTime beginDate, decimal sumAmount)
+        public List<CustomerViewModel> GetCustomers(DateTime beginDate, decimal sumAmount)
         {
             DateTime currentDate = DateTime.Now;
             var customers = context.Customers
@@ -37,16 +36,6 @@ namespace ConsoleApp1.Service
                 .ToList();
 
             return customers;
-
-            string sqlExpression = @"SELECT c.NAME AS Customer, m.NAME AS Manager, SUM(o.AMOUNT) AS Amount
-                                            FROM CUSTOMERS c INNER JOIN MANAGERS m ON c.MANAGERID = m.ID
-                                            INNER JOIN ORDERS o ON c.ID = o.CUSTOMERID
-                                            WHERE o.DATE >= @beginDate AND o.DATE <= @currentDate
-                                            GROUP BY c.ID, c.NAME, m.NAME
-                                            HAVING SUM(o.AMOUNT) > @sumAmount;";
         }
-
-
-
     }
 }
